@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package vista;
+import conexion.conexionBD;
 
 /**
  *
@@ -120,10 +121,11 @@ public class login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                conexionBD con = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/","Hotel_db");
+                System.out.println(con.conexion());
                 new login().setVisible(true);
             }
         });
