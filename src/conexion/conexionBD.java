@@ -90,4 +90,41 @@ public class conexionBD {
         }
         return flag;
     }
+    
+    public boolean ejecutarInstruccionSQL(String sql) {
+
+        int ejecucion;
+        try {
+            stm = (Statement)con.createStatement();
+            ejecucion = stm.executeUpdate(sql);
+            return ejecucion==1?true:false;
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean instruccionSQL(String sql){
+         boolean x = false;
+        try {
+            stm = con.prepareStatement(sql);
+            stm.executeUpdate(sql);
+            x = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x;
+    }
+    
+    public ResultSet consultarRegistros(String sql) {
+		
+	try {
+            stm = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            rs = stm.executeQuery(sql);
+	} catch (SQLException e) {
+            e.printStackTrace();
+	}
+	return rs;
+    }
 }

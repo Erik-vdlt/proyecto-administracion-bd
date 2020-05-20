@@ -4,18 +4,31 @@
  * and open the template in the editor.
  */
 package vista;
-
+import conexion.HuespedDAO;
+import conexion.conexionBD;
+import javax.swing.JButton;
+import modelo.TablaHuesped;
 /**
  *
  * @author erik
  */
 public class Huesped extends javax.swing.JPanel {
-
+    
+    conexionBD co;
+    TablaHuesped tb = new TablaHuesped();
+    HuespedDAO hdao = new HuespedDAO();
+    
     /**
      * Creates new form Huesped
      */
     public Huesped() {
         initComponents();
+    }
+    
+    public Huesped(conexion.conexionBD conexion) {
+        co = conexion;
+        initComponents();
+        tb.ver_tabla(tbl_huesped, conexion);
     }
 
     /**
@@ -28,31 +41,41 @@ public class Huesped extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txt_busqueda_huesped = new javax.swing.JTextField();
+        btn_buscar_huesped = new javax.swing.JButton();
+        btn_agregar_huesped = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_huesped = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Huesped");
 
-        jButton1.setText("Buscar");
+        btn_buscar_huesped.setText("Buscar");
 
-        jButton2.setText("Agregar");
+        btn_agregar_huesped.setText("Agregar");
+        btn_agregar_huesped.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_huespedActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_huesped.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Nombre", "Primer Apellido", "Segundo Apellido", "Direccion", "Email", "Telefono", "Ciudad", "Pais", "Identificacion"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_huesped.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_huespedMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_huesped);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -65,15 +88,13 @@ public class Huesped extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_busqueda_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(btn_buscar_huesped)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                        .addComponent(btn_agregar_huesped)))
+                .addContainerGap(526, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,22 +103,49 @@ public class Huesped extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(txt_busqueda_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar_huesped)
+                    .addComponent(btn_agregar_huesped))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(156, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_agregar_huespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_huespedActionPerformed
+        // TODO add your handling code here:
+        System.out.println("vista.Huesped.btn_agregar_huespedActionPerformed()"+ co);
+        AgregarHuesped ah = new AgregarHuesped(co);
+        ah.setVisible(true);
+    }//GEN-LAST:event_btn_agregar_huespedActionPerformed
+
+    private void tbl_huespedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_huespedMouseClicked
+        // TODO add your handling code here:
+        
+        int columna = tbl_huesped.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/tbl_huesped.getRowHeight();
+        
+        if(row < tbl_huesped.getRowCount() && row >= 0 && columna < tbl_huesped.getColumnCount() && columna >= 0){
+            Object value = tbl_huesped.getValueAt(row, columna);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton)value;
+                if(boton.getName().equalsIgnoreCase("elm")){
+                    int valor = Integer.parseInt(String.valueOf(tbl_huesped.getValueAt(row, 0)));
+                    hdao.eliminarHuesped(co, valor);
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_tbl_huespedMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btn_agregar_huesped;
+    private javax.swing.JButton btn_buscar_huesped;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbl_huesped;
+    private javax.swing.JTextField txt_busqueda_huesped;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
  */
 package vista;
 
+import conexion.conexionBD;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,19 +21,30 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     /**
      * Creates new form vistaPrincipal
      */
-    
-    Huesped hp = new Huesped();
+    conexion.conexionBD con;
+    Huesped hp;
     vistaHabitacion vh = new vistaHabitacion();
     vistaPago vp = new vistaPago();
     
     
     public vistaPrincipal() {
         initComponents();
+        setSize(900, 400);
         setLocationRelativeTo(null);
         btn_huesped.addActionListener(this);
         btn_habitacion.addActionListener(this);
         btn_pago.addActionListener(this);
         //panelGeneral.add(hp,java.awt.BorderLayout.CENTER);
+    }
+    
+    public vistaPrincipal(conexionBD co){
+        con = co;
+        initComponents();
+        setSize(900, 400);
+        setLocationRelativeTo(null);
+        btn_huesped.addActionListener(this);
+        btn_habitacion.addActionListener(this);
+        btn_pago.addActionListener(this);
     }
 
     /**
@@ -119,7 +131,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent ae) {
         if(ae.getActionCommand().equalsIgnoreCase("huesped")){
             System.out.println("funciona");
-            //Huesped h = new Huesped();
+            hp = new Huesped(con);
             vh.setVisible(false);
             vp.setVisible(false);
             hp.setVisible(true);

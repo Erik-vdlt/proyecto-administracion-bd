@@ -11,7 +11,10 @@ import conexion.conexionBD;
  * @author erik
  */
 public class login extends javax.swing.JFrame {
-
+    
+    conexionBD conexion = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/", "Hotel_db");
+    vistaPrincipal vp = new vistaPrincipal(conexion);
+    
     /**
      * Creates new form login
      */
@@ -103,8 +106,9 @@ public class login extends javax.swing.JFrame {
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-        vistaPrincipal vp = new vistaPrincipal();
+        conexion.conexion();
         vp.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     /**
@@ -136,8 +140,8 @@ public class login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                conexionBD con = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/","Hotel_db");
-                System.out.println(con.conexion());
+                //conexionBD con = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/","Hotel_db");
+                //System.out.println(con.conexion());
                 new login().setVisible(true);
             }
         });
