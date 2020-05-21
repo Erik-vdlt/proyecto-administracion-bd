@@ -8,6 +8,9 @@ package vista;
 import conexion.HuespedDAO;
 import modelo.Huesped;
 import conexion.conexionBD;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 /**
  *
@@ -15,6 +18,7 @@ import conexion.conexionBD;
  */
 public class AgregarHuesped extends javax.swing.JFrame {
     conexionBD conexion;
+    JButton btn_actualizar = new JButton("Actualizar");
     /**
      * Creates new form AgregarHuesped
      */
@@ -56,7 +60,6 @@ public class AgregarHuesped extends javax.swing.JFrame {
         cmb_pais_huesped = new javax.swing.JComboBox<>();
         cmb_identificacion_huesped = new javax.swing.JComboBox<>();
         btn_aceptar = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -104,13 +107,8 @@ public class AgregarHuesped extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(106, 106, 106)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
@@ -166,9 +164,7 @@ public class AgregarHuesped extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txt_email_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txt_telefono_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,6 +208,44 @@ public class AgregarHuesped extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
+    public void accionActualizarRegistro(Huesped h,conexionBD co){
+        
+        txt_nombre_hueped.setText(h.getNombreHuesped());
+        txt_pa_huesped.setText(h.getPrimerApellido());
+        txt_sa_huesped.setText(h.getSegundoApellido());
+        txt_direccion_hueped.setText(h.getDireccion());
+        txt_email_huesped.setText(h.getEmail());
+        txt_telefono_huesped.setText(h.getTelefono());
+        System.out.println("si accede al metodo accionActualizarRegistro linea 219");
+        btn_actualizar.addActionListener(new ActionListener() {
+            
+            
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Huesped h1 = new Huesped();
+                HuespedDAO hdao = new HuespedDAO();
+                h1.setIdHuesped(h.getIdHuesped());
+                h1.setNombreHuesped(txt_nombre_hueped.getText());
+                h1.setPrimerApellido(txt_pa_huesped.getText());
+                h1.setSegundoApellido(txt_sa_huesped.getText());
+                h1.setDireccion(txt_direccion_hueped.getText());
+                h1.setEmail(txt_email_huesped.getText());
+                h1.setTelefono(txt_telefono_huesped.getText());
+                h1.setPais(String.valueOf(cmb_pais_huesped.getSelectedItem()));
+                h1.setIdentificacion(Boolean.valueOf(String.valueOf(cmb_identificacion_huesped.getSelectedItem())));
+                System.out.println(co);
+                if(hdao.actualizarHuesped(co, h1)){
+                    System.out.println("inserccion exitosa");
+                }
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        btn_aceptar.setVisible(false);
+        btn_actualizar.setBounds(170, 405, 115, 28);
+        getContentPane().add(btn_actualizar);
+        //btn_actualizar.addActionListener();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -261,7 +295,6 @@ public class AgregarHuesped extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_direccion_hueped;
     private javax.swing.JTextField txt_email_huesped;
     private javax.swing.JTextField txt_nombre_hueped;

@@ -6,26 +6,29 @@
 package vista;
 import conexion.HuespedDAO;
 import conexion.conexionBD;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import modelo.TablaHuesped;
+import modelo.Huesped;
 /**
  *
  * @author erik
  */
-public class Huesped extends javax.swing.JPanel {
+public class VistaHuesped extends javax.swing.JPanel {
     
     conexionBD co;
     TablaHuesped tb = new TablaHuesped();
     HuespedDAO hdao = new HuespedDAO();
+    String clave= "";
     
     /**
      * Creates new form Huesped
      */
-    public Huesped() {
+    public VistaHuesped() {
         initComponents();
     }
     
-    public Huesped(conexion.conexionBD conexion) {
+    public VistaHuesped(conexion.conexionBD conexion) {
         co = conexion;
         initComponents();
         tb.ver_tabla(tbl_huesped, conexion);
@@ -49,6 +52,12 @@ public class Huesped extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Huesped");
+
+        txt_busqueda_huesped.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_busqueda_huespedKeyPressed(evt);
+            }
+        });
 
         btn_buscar_huesped.setText("Buscar");
 
@@ -134,10 +143,44 @@ public class Huesped extends javax.swing.JPanel {
                     int valor = Integer.parseInt(String.valueOf(tbl_huesped.getValueAt(row, 0)));
                     hdao.eliminarHuesped(co, valor);
                 }
+                else if(boton.getName().equalsIgnoreCase("act")){
+                    AgregarHuesped ah = new AgregarHuesped();
+                    Huesped h = new Huesped();
+                    h.setIdHuesped(Integer.parseInt(String.valueOf(tbl_huesped.getValueAt(row, 0))));
+                    h.setNombreHuesped(String.valueOf(tbl_huesped.getValueAt(row, 1)));
+                    h.setPrimerApellido(String.valueOf(tbl_huesped.getValueAt(row, 2)));
+                    h.setSegundoApellido(String.valueOf(tbl_huesped.getValueAt(row, 3)));
+                    h.setDireccion(String.valueOf(tbl_huesped.getValueAt(row, 4)));
+                    h.setEmail(String.valueOf(tbl_huesped.getValueAt(row, 5)));
+                    h.setTelefono(String.valueOf(tbl_huesped.getValueAt(row, 2)));
+                    
+                    ah.accionActualizarRegistro(h,co);
+                    ah.setVisible(true);
+                }
             }
         }
         
     }//GEN-LAST:event_tbl_huespedMouseClicked
+
+    private void txt_busqueda_huespedKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busqueda_huespedKeyPressed
+        // TODO add your handling code here:
+        
+        clave += String.valueOf(evt.getKeyChar());
+        System.out.println(clave+" parametro");
+        if(evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+            System.out.println("vista.VistaHuesped.txt_busqueda_huespedKeyPressed() --> "+clave);
+            String v = clave.substring(clave.length()-2, clave.length());
+            System.out.println("vista.VistaHuesped.txt_busqueda_huespedKeyPressed() ---> "+clave+" v --> "+v);
+            clave = clave.replace(v, " ");
+            clave = clave.strip();
+            System.out.println("vista.VistaHuesped.txt_busqueda_huespedKeyPressed() ----> "+clave);
+            tb.actualizar_tabla(tbl_huesped, co,"nombre_huesped", clave);
+        }
+        else{
+            tb.actualizar_tabla(tbl_huesped, co,"nombre_huesped", clave);
+        }
+        
+    }//GEN-LAST:event_txt_busqueda_huespedKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

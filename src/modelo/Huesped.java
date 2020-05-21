@@ -10,6 +10,7 @@ package modelo;
  * @author erik
  */
 public class Huesped {
+    private int idHuesped;
     private String nombreHuesped;
     private String primerApellido;
     private String segundoApellido;
@@ -32,6 +33,14 @@ public class Huesped {
         this.ciudad = ciudad;
         this.pais = pais;
         this.identificacion = identificacion;
+    }
+
+    public int getIdHuesped() {
+        return idHuesped;
+    }
+
+    public void setIdHuesped(int idHuesped) {
+        this.idHuesped = idHuesped;
     }
 
     public String getNombreHuesped() {

@@ -22,7 +22,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
      * Creates new form vistaPrincipal
      */
     conexion.conexionBD con;
-    Huesped hp;
+    VistaHuesped hp;
     vistaHabitacion vh = new vistaHabitacion();
     vistaPago vp = new vistaPago();
     
@@ -131,7 +131,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent ae) {
         if(ae.getActionCommand().equalsIgnoreCase("huesped")){
             System.out.println("funciona");
-            hp = new Huesped(con);
+            hp = new VistaHuesped(con);
             vh.setVisible(false);
             vp.setVisible(false);
             hp.setVisible(true);

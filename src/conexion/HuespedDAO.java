@@ -26,5 +26,14 @@ public class HuespedDAO {
         return conexion.ejecutarInstruccionSQL(sql);
     }
     
+    public boolean actualizarHuesped(conexionBD conexion,Huesped h){
+        String sql = "update huesped set nombre_huesped = '"+h.getNombreHuesped()+"',primer_apellido_huesped = '"+h.getPrimerApellido()
+                +"',segundo_apellido_huesped = '"+h.getSegundoApellido()+"',direccion = '"+h.getDireccion()+"',email = '"+h.getEmail()
+                +"',telefono = '"+h.getTelefono()+"',pais = '"+h.getPais()+"',identificacion = "+h.isIdentificacion()
+                +" where id_huesped = "+h.getIdHuesped()+";";
+        
+        return conexion.ejecutarInstruccionSQL(sql);    
+    }
+    
     
 }

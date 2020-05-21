@@ -33,8 +33,11 @@ public class TablaHuesped {
         ResultSet result = conexion.consultarRegistros(sql);
         JButton btn_eliminar = new JButton("Eliminar");
         btn_eliminar.setName("elm");
+        JButton btn_actualizar = new JButton("Acutalizar");
+        btn_actualizar.setName("act");
         
-        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Direccion","Email","Telefono","Pais","Identificacion","Eliminar"});
+        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Direccion","Email",
+            "Telefono","Pais","Identificacion","Eliminar","Actualizar"});
         
         try{
             while(result.next()){
@@ -48,7 +51,50 @@ public class TablaHuesped {
                         result.getString(7),
                         result.getString(8),
                         result.getBoolean(9),
-                        btn_eliminar});
+                        btn_eliminar,
+                        btn_actualizar});
+            }
+            tablaHuesped.setModel(tm);
+            tablaHuesped.setRowHeight(30);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+    }
+    
+    public void actualizar_tabla(JTable tablaHuesped,conexionBD conexion,String clave,String valor){
+        
+        tablaHuesped.setDefaultRenderer(Object.class, new Render());
+        
+        DefaultTableModel tm = new DefaultTableModel(){
+            public boolean isCellEditable(int row,int column){
+                return false;
+            }
+        };
+        String sql = "select * from huesped where "+clave+" like '%"+valor+"%';";
+        ResultSet result = conexion.consultarRegistros(sql);
+        JButton btn_eliminar = new JButton("Eliminar");
+        btn_eliminar.setName("elm");
+        JButton btn_actualizar = new JButton("Acutalizar");
+        btn_actualizar.setName("act");
+        
+        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Direccion","Email",
+            "Telefono","Pais","Identificacion","Eliminar","Actualizar"});
+        
+        try{
+            while(result.next()){
+                tm.addRow(new Object[]{
+                        result.getInt(1),
+                        result.getString(2),
+                        result.getString(3),
+                        result.getString(4),
+                        result.getString(5),
+                        result.getString(6),
+                        result.getString(7),
+                        result.getString(8),
+                        result.getBoolean(9),
+                        btn_eliminar,
+                        btn_actualizar});
             }
             tablaHuesped.setModel(tm);
             tablaHuesped.setRowHeight(30);

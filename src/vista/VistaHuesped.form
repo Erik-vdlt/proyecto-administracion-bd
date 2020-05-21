@@ -64,6 +64,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_busqueda_huesped">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_busqueda_huespedKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_buscar_huesped">
       <Properties>
