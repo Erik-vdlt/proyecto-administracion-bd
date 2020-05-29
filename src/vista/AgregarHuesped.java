@@ -10,13 +10,16 @@ import modelo.Huesped;
 import conexion.conexionBD;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 /**
  *
  * @author erik
  */
-public class AgregarHuesped extends javax.swing.JFrame {
+public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
     conexionBD conexion;
     JButton btn_actualizar = new JButton("Actualizar");
     /**
@@ -30,6 +33,7 @@ public class AgregarHuesped extends javax.swing.JFrame {
     public AgregarHuesped(conexionBD conexion) {
         this.conexion = conexion;
         initComponents();
+        txt_nombre_hueped.addKeyListener(this);
         setLocationRelativeTo(null);
     }
 
@@ -302,4 +306,30 @@ public class AgregarHuesped extends javax.swing.JFrame {
     private javax.swing.JTextField txt_sa_huesped;
     private javax.swing.JTextField txt_telefono_huesped;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent ke) {
+        if(ke.getComponent().equals(txt_nombre_hueped) || ke.getComponent().equals(txt_pa_huesped)){
+            if(Character.isAlphabetic(ke.getKeyChar())){
+                System.out.println("alfabeto");
+            }
+            else{
+                ke.consume();
+                System.out.println("no alfabeto");
+            }
+                
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent ke) {
+        //solo_alfabeto(txt_nombre_hueped);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent ke) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

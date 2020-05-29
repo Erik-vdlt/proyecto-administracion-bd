@@ -58,6 +58,11 @@
                 <Property name="text" type="java.lang.String" value="Pago"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JButton" name="btn_reservacion">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reservacion"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

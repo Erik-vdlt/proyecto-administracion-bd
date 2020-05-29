@@ -29,8 +29,8 @@ public class VistaHuesped extends javax.swing.JPanel {
     }
     
     public VistaHuesped(conexion.conexionBD conexion) {
-        co = conexion;
         initComponents();
+        co = conexion;
         tb.ver_tabla(tbl_huesped, conexion);
     }
 
@@ -70,6 +70,12 @@ public class VistaHuesped extends javax.swing.JPanel {
 
         tbl_huesped.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -116,8 +122,8 @@ public class VistaHuesped extends javax.swing.JPanel {
                     .addComponent(btn_buscar_huesped)
                     .addComponent(btn_agregar_huesped))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

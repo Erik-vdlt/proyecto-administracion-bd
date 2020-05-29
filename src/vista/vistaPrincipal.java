@@ -23,8 +23,9 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
      */
     conexion.conexionBD con;
     VistaHuesped hp;
-    vistaHabitacion vh = new vistaHabitacion();
-    vistaPago vp = new vistaPago();
+    vistaHabitacion vh;
+    vistaPago vp;
+    VistaHuespedReservacion vhr;
     
     
     public vistaPrincipal() {
@@ -45,6 +46,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_huesped.addActionListener(this);
         btn_habitacion.addActionListener(this);
         btn_pago.addActionListener(this);
+        btn_reservacion.addActionListener(this);
     }
 
     /**
@@ -61,6 +63,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_huesped = new javax.swing.JButton();
         btn_habitacion = new javax.swing.JButton();
         btn_pago = new javax.swing.JButton();
+        btn_reservacion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,6 +79,9 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
 
         btn_pago.setText("Pago");
         panelPrincipal.add(btn_pago);
+
+        btn_reservacion.setText("Reservacion");
+        panelPrincipal.add(btn_reservacion);
 
         panelGeneral.add(panelPrincipal, java.awt.BorderLayout.LINE_START);
 
@@ -123,6 +129,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     private javax.swing.JButton btn_habitacion;
     private javax.swing.JButton btn_huesped;
     private javax.swing.JButton btn_pago;
+    private javax.swing.JButton btn_reservacion;
     private javax.swing.JPanel panelGeneral;
     private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
@@ -132,24 +139,55 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         if(ae.getActionCommand().equalsIgnoreCase("huesped")){
             System.out.println("funciona");
             hp = new VistaHuesped(con);
-            vh.setVisible(false);
-            vp.setVisible(false);
-            hp.setVisible(true);
+            
+           
+                System.out.println(hp.isVisible());
+                hp.setVisible(true);
+                if(vh.isVisible() || vp.isVisible() || vhr.isVisible()){
+                vh.setVisible(false);
+                vp.setVisible(false);
+                vhr.setVisible(false);
+                }
+            //hp.setVisible(true);
             panelGeneral.add(hp,java.awt.BorderLayout.CENTER);
             panelGeneral.validate();
+            
+            //hp = new VistaHuesped(con);
         }
         else if(ae.getActionCommand().equalsIgnoreCase("habitacion")){
-            hp.setVisible(false);
-            vp.setVisible(false);
+            System.out.println("funciona 1");
+            vh = new vistaHabitacion();
+            if(hp.isVisible() || vp.isVisible() || vhr.isVisible()){
+                hp.setVisible(false);
+                vp.setVisible(false);
+                vhr.setVisible(false);
+            }
             vh.setVisible(true);
             panelGeneral.add(vh,java.awt.BorderLayout.CENTER);
             panelGeneral.validate();
         }
         else if(ae.getActionCommand().equalsIgnoreCase("pago")){
-            hp.setVisible(false);
-            vh.setVisible(false);
+            System.out.println("funciona 2");
+            vp = new vistaPago();
+            if(hp.isVisible() || vh.isVisible() || vhr.isVisible()){
+                hp.setVisible(false);
+                vh.setVisible(false);
+                vhr.setVisible(false);
+            }
             vp.setVisible(true);
             panelGeneral.add(vp,java.awt.BorderLayout.CENTER);
+            panelGeneral.validate();
+        }
+        else if(ae.getActionCommand().equalsIgnoreCase("reservacion")){
+            System.out.println("funciona 3");
+            vhr = new VistaHuespedReservacion(con);
+            if(hp.isVisible() || vh.isVisible() || vp.isVisible()){
+                hp.setVisible(false);
+                vh.setVisible(false);
+                vp.setVisible(false);
+            }
+            vhr.setVisible(true);
+            panelGeneral.add(vhr,java.awt.BorderLayout.CENTER);
             panelGeneral.validate();
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
