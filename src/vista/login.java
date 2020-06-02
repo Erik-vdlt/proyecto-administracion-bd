@@ -5,6 +5,8 @@
  */
 package vista;
 import conexion.conexionBD;
+import conexion.loginDAO;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,8 +14,10 @@ import conexion.conexionBD;
  */
 public class login extends javax.swing.JFrame {
     
-    conexionBD conexion = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/", "Hotel_db");
+    conexionBD conexion = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/", "Hotel_DB");
     vistaPrincipal vp = new vistaPrincipal(conexion);
+    loginDAO ldao = new loginDAO();
+    
     
     /**
      * Creates new form login
@@ -107,8 +111,24 @@ public class login extends javax.swing.JFrame {
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
         conexion.conexion();
-        vp.setVisible(true);
-        setVisible(false);
+        ArrayList listaUser = new ArrayList();
+        ArrayList listaPassword = new ArrayList();
+        
+        ldao.buscarUsuario(conexion,listaUser,listaPassword);
+        
+        
+        for (int i = 0; i < listaUser.size(); i++) {
+            //System.out.println(listaUser.get(i)+" "+listaPassword.get(i));
+            if(cj_usuario.getText().equalsIgnoreCase(String.valueOf(listaUser.get(i))) && 
+                    cj_contra.getText().equalsIgnoreCase(String.valueOf(listaPassword.get(i)))){
+                vp.setVisible(true);
+                setVisible(false);
+                break;
+            }
+            else{
+                System.out.println("vista.login.btn_aceptarActionPerformed() "+String.valueOf(listaUser.get(i))+String.valueOf(listaUser.get(i)));
+            }
+        }
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     /**
