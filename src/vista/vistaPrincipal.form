@@ -63,6 +63,14 @@
                 <Property name="text" type="java.lang.String" value="Reservacion"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JButton" name="btn_graficas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Graficas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_graficasActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

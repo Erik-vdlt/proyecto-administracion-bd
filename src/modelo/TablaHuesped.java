@@ -29,15 +29,16 @@ public class TablaHuesped {
                 return false;
             }
         };
-        String sql = "select * from huesped;";
+        String sql = "select id_huesped,nombre_huesped,primer_ap_huesped,segundo_ap_huesped,"
+                + "correo_huesped,telefono_huesped,ciudad,identificacion,puntos from huesped;";
         ResultSet result = conexion.consultarRegistros(sql);
         JButton btn_eliminar = new JButton("Eliminar");
         btn_eliminar.setName("elm");
         JButton btn_actualizar = new JButton("Acutalizar");
         btn_actualizar.setName("act");
         
-        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Direccion","Email",
-            "Telefono","Pais","Identificacion","Eliminar","Actualizar"});
+        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Correo",
+            "Telefono","Pais","Identificacion","Puntos","Eliminar","Actualizar"});
         
         try{
             while(result.next()){
@@ -49,8 +50,8 @@ public class TablaHuesped {
                         result.getString(5),
                         result.getString(6),
                         result.getString(7),
-                        result.getString(8),
-                        result.getBoolean(9),
+                        result.getBoolean(8),
+                        result.getInt(9),
                         btn_eliminar,
                         btn_actualizar});
             }
@@ -78,8 +79,8 @@ public class TablaHuesped {
         JButton btn_actualizar = new JButton("Acutalizar");
         btn_actualizar.setName("act");
         
-        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Direccion","Email",
-            "Telefono","Pais","Identificacion","Eliminar","Actualizar"});
+        tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Correo",
+            "Telefono","Pais","Identificacion","Puntos","Eliminar","Actualizar"});
         
         try{
             while(result.next()){
@@ -91,8 +92,8 @@ public class TablaHuesped {
                         result.getString(5),
                         result.getString(6),
                         result.getString(7),
-                        result.getString(8),
-                        result.getBoolean(9),
+                        result.getBoolean(8),
+                        result.getInt(9),
                         btn_eliminar,
                         btn_actualizar});
             }

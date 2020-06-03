@@ -11,6 +11,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,7 +41,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         //panelGeneral.add(hp,java.awt.BorderLayout.CENTER);
     }
     
-    public vistaPrincipal(conexionBD co){
+    public vistaPrincipal(conexionBD co, int tipo){
         con = co;
         initComponents();
         setSize(900, 400);
@@ -47,6 +50,12 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_habitacion.addActionListener(this);
         btn_pago.addActionListener(this);
         btn_reservacion.addActionListener(this);
+        
+        if(tipo == 2){
+            btn_habitacion.setVisible(false);
+            btn_pago.setVisible(false);
+            btn_huesped.setVisible(false);
+        }
     }
 
     /**
@@ -64,6 +73,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_habitacion = new javax.swing.JButton();
         btn_pago = new javax.swing.JButton();
         btn_reservacion = new javax.swing.JButton();
+        btn_graficas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,12 +93,29 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_reservacion.setText("Reservacion");
         panelPrincipal.add(btn_reservacion);
 
+        btn_graficas.setText("Graficas");
+        btn_graficas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_graficasActionPerformed(evt);
+            }
+        });
+        panelPrincipal.add(btn_graficas);
+
         panelGeneral.add(panelPrincipal, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(panelGeneral, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_graficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_graficasActionPerformed
+        // TODO add your handling code here:
+        VistaGraficas vg = new VistaGraficas(con);
+        vg.setVisible(true);
+        panelGeneral.add(vg,java.awt.BorderLayout.CENTER);
+        panelGeneral.validate();
+        
+    }//GEN-LAST:event_btn_graficasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,6 +153,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_graficas;
     private javax.swing.JButton btn_habitacion;
     private javax.swing.JButton btn_huesped;
     private javax.swing.JButton btn_pago;
@@ -137,58 +165,87 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getActionCommand().equalsIgnoreCase("huesped")){
-            System.out.println("funciona");
-            hp = new VistaHuesped(con);
             
-           
-                System.out.println(hp.isVisible());
-                hp.setVisible(true);
+                System.out.println("funciona");
+                
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        hp = new VistaHuesped(con);
+                        hp.setVisible(true);
+                        
+                       /* if(vh.isVisible() || vp.isVisible() || vhr.isVisible()){
+                    vh.setVisible(false);
+                    vp.setVisible(false);
+                    vhr.setVisible(false);
+                }*/
+                //hp.setVisible(true);
+                panelGeneral.add(hp,java.awt.BorderLayout.CENTER);
+                panelGeneral.validate();
+                    }
+                });
                 if(vh.isVisible() || vp.isVisible() || vhr.isVisible()){
-                vh.setVisible(false);
-                vp.setVisible(false);
-                vhr.setVisible(false);
+                    vh.setVisible(false);
+                    vp.setVisible(false);
+                    vhr.setVisible(false);
                 }
-            //hp.setVisible(true);
-            panelGeneral.add(hp,java.awt.BorderLayout.CENTER);
-            panelGeneral.validate();
+                
+                //hp = new VistaHuesped(con);
+                //hp.setVisible(true);
+                
+                
+                //hp = new VistaHuesped(con);
             
-            //hp = new VistaHuesped(con);
         }
         else if(ae.getActionCommand().equalsIgnoreCase("habitacion")){
             System.out.println("funciona 1");
             vh = new vistaHabitacion();
-            if(hp.isVisible() || vp.isVisible() || vhr.isVisible()){
-                hp.setVisible(false);
-                vp.setVisible(false);
-                vhr.setVisible(false);
-            }
+            
             vh.setVisible(true);
             panelGeneral.add(vh,java.awt.BorderLayout.CENTER);
             panelGeneral.validate();
+            
+            if(hp.isVisible() || vp.isVisible() || vhr.isVisible()){
+                    hp.setVisible(false);
+                    vp.setVisible(false);
+                    vhr.setVisible(false);
+                }
         }
         else if(ae.getActionCommand().equalsIgnoreCase("pago")){
             System.out.println("funciona 2");
             vp = new vistaPago();
+            
+            vp.setVisible(true);
+            panelGeneral.add(vp,java.awt.BorderLayout.CENTER);
+            panelGeneral.validate();
             if(hp.isVisible() || vh.isVisible() || vhr.isVisible()){
                 hp.setVisible(false);
                 vh.setVisible(false);
                 vhr.setVisible(false);
             }
-            vp.setVisible(true);
-            panelGeneral.add(vp,java.awt.BorderLayout.CENTER);
-            panelGeneral.validate();
         }
         else if(ae.getActionCommand().equalsIgnoreCase("reservacion")){
             System.out.println("funciona 3");
-            vhr = new VistaHuespedReservacion(con);
+            
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    vhr = new VistaHuespedReservacion(con);
+                    vhr.setVisible(true);
+                    panelGeneral.add(vhr,java.awt.BorderLayout.CENTER);
+                    panelGeneral.validate();
+                }
+            });
+            
+            //vhr = new VistaHuespedReservacion(con);
             if(hp.isVisible() || vh.isVisible() || vp.isVisible()){
                 hp.setVisible(false);
                 vh.setVisible(false);
                 vp.setVisible(false);
             }
-            vhr.setVisible(true);
+            /*vhr.setVisible(true);
             panelGeneral.add(vhr,java.awt.BorderLayout.CENTER);
-            panelGeneral.validate();
+            panelGeneral.validate();*/
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

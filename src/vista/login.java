@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class login extends javax.swing.JFrame {
     
     conexionBD conexion = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/", "Hotel_DB");
-    vistaPrincipal vp = new vistaPrincipal(conexion);
+    //vistaPrincipal vp = new vistaPrincipal(conexion);
     loginDAO ldao = new loginDAO();
     
     
@@ -113,14 +113,16 @@ public class login extends javax.swing.JFrame {
         conexion.conexion();
         ArrayList listaUser = new ArrayList();
         ArrayList listaPassword = new ArrayList();
+        ArrayList listaTipo = new ArrayList();
         
-        ldao.buscarUsuario(conexion,listaUser,listaPassword);
+        ldao.buscarUsuario(conexion,listaUser,listaPassword,listaTipo);
         
         
         for (int i = 0; i < listaUser.size(); i++) {
             //System.out.println(listaUser.get(i)+" "+listaPassword.get(i));
             if(cj_usuario.getText().equalsIgnoreCase(String.valueOf(listaUser.get(i))) && 
                     cj_contra.getText().equalsIgnoreCase(String.valueOf(listaPassword.get(i)))){
+                vistaPrincipal vp = new vistaPrincipal(conexion,Integer.parseInt(String.valueOf(listaTipo.get(i))));
                 vp.setVisible(true);
                 setVisible(false);
                 break;

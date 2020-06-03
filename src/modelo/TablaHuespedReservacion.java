@@ -28,9 +28,10 @@ public class TablaHuespedReservacion {
                 return false;
             }
         };
-        String sql = "select id_huesped,nombre_huesped,primer_apellido_huesped,segundo_apellido_huesped,\n" +
-                     "id_reservacion,fecha_reservacion,fecha_ingreso,fecha_salida from huesped\n" +
-                     "inner join reservacion on id_huesped = fk_huesped;";
+        String sql = "select id_huesped,nombre_huesped,primer_ap_huesped,segundo_ap_huesped,\n" +
+                     "id_reservacion,fecha_reservacion,fecha_entrada,fecha_salida from huesped\n" +
+                     "inner join reservacion on id_huesped = fk_huesped_reservacion;";
+        
         
         ResultSet result = conexion.consultarRegistros(sql);
         JButton btn_eliminar = new JButton("Eliminar");

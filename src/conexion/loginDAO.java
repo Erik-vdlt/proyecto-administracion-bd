@@ -18,15 +18,16 @@ import java.sql.ResultSet;
  */
 public class loginDAO {
     
-    public void buscarUsuario(conexionBD conexion,ArrayList usuarios,ArrayList password){
+    public void buscarUsuario(conexionBD conexion,ArrayList usuarios,ArrayList password,ArrayList tipo){
         LoginModelo lm = new LoginModelo();
-        String sql = "select usuario,contraseña from usuarios";
+        String sql = "select usuario,contraseña,fk_tipo_usuario from usuarios";
         ResultSet rs = conexion.consultarRegistros(sql);
         try {
             
             while(rs.next()){
                 usuarios.add(rs.getString(1));
                 password.add(rs.getString(2));
+                tipo.add(rs.getInt(3));
             }
             
         } catch (SQLException ex) {
