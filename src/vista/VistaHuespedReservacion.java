@@ -5,7 +5,11 @@
  */
 package vista;
 
+import conexion.ReservacionDAO;
+import javax.swing.JButton;
+import modelo.Huesped;
 import modelo.TablaHuespedReservacion;
+import modelo.Reservacion;
 
 /**
  *
@@ -15,6 +19,7 @@ public class VistaHuespedReservacion extends javax.swing.JPanel {
     
     conexion.conexionBD con;
     TablaHuespedReservacion tablaHR = new TablaHuespedReservacion();
+    ReservacionDAO rdao = new ReservacionDAO();
 
     /**
      * Creates new form vistaHuespedHabitacion
@@ -40,6 +45,9 @@ public class VistaHuespedReservacion extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaReservaciones = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        btn_agregar_huesped = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         tablaReservaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -58,29 +66,113 @@ public class VistaHuespedReservacion extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
             }
         ));
+        tablaReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaReservacionesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaReservaciones);
+
+        jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel1.setText("Reservacion");
+
+        btn_agregar_huesped.setText("Agregar");
+        btn_agregar_huesped.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_huespedActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(btn_agregar_huesped)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_agregar_huesped)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_agregar_huespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_huespedActionPerformed
+        // TODO add your handling code here:
+        VistaAgregarReservacion var = new VistaAgregarReservacion(con);
+        var.setVisible(true);
+    }//GEN-LAST:event_btn_agregar_huespedActionPerformed
+
+    private void tablaReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaReservacionesMouseClicked
+        // TODO add your handling code here:
+        
+        
+        int columna = tablaReservaciones.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/tablaReservaciones.getRowHeight();
+        
+        if(row < tablaReservaciones.getRowCount() && row >= 0 && columna < tablaReservaciones.getColumnCount() && columna >= 0){
+            Object value = tablaReservaciones.getValueAt(row, columna);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton)value;
+                if(boton.getName().equalsIgnoreCase("elm")){
+                    int valor = Integer.parseInt(String.valueOf(tablaReservaciones.getValueAt(row, 0)));
+                    rdao.eliminarReservacion(con, valor);
+                    tablaHR.ver_tabla(tablaReservaciones, con);
+                }
+                else if(boton.getName().equalsIgnoreCase("act")){
+                    VistaAgregarReservacion viar = new VistaAgregarReservacion(con);
+                    Reservacion r = new Reservacion();
+                    r.setIdReservacion(Integer.parseInt(String.valueOf(tablaReservaciones.getValueAt(row, 4))));
+                    r.setFechaReservacion(String.valueOf(tablaReservaciones.getValueAt(row, 5)));
+                    r.setFechaIngreso(String.valueOf(tablaReservaciones.getValueAt(row, 6)));
+                    r.setFechaSalida(String.valueOf(tablaReservaciones.getValueAt(row, 7)));
+                    r.setIdHuesped(Integer.parseInt(String.valueOf(tablaReservaciones.getValueAt(row, 0))));
+                    /*h.setIdHuesped(Integer.parseInt(String.valueOf(tablaReservaciones.getValueAt(row, 0))));
+                    h.setNombreHuesped(String.valueOf(tablaReservaciones.getValueAt(row, 1)));
+                    h.setPrimerApellido(String.valueOf(tablaReservaciones.getValueAt(row, 2)));
+                    h.setSegundoApellido(String.valueOf(tablaReservaciones.getValueAt(row, 3)));
+                    h.setDireccion(String.valueOf(tablaReservaciones.getValueAt(row, 4)));
+                    h.setEmail(String.valueOf(tablaReservaciones.getValueAt(row, 5)));
+                    h.setTelefono(String.valueOf(tablaReservaciones.getValueAt(row, 2)));
+                    */
+                    //ah.accionActualizarRegistro(h,co);
+                    //ah.setVisible(true);
+                    
+                    viar.actualizarReservacion(con, r);
+                    viar.setVisible(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_tablaReservacionesMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_agregar_huesped;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaReservaciones;
     // End of variables declaration//GEN-END:variables
 }

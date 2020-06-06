@@ -14,6 +14,13 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -74,6 +81,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_pago = new javax.swing.JButton();
         btn_reservacion = new javax.swing.JButton();
         btn_graficas = new javax.swing.JButton();
+        btn_reporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +99,11 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         panelPrincipal.add(btn_pago);
 
         btn_reservacion.setText("Reservacion");
+        btn_reservacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reservacionActionPerformed(evt);
+            }
+        });
         panelPrincipal.add(btn_reservacion);
 
         btn_graficas.setText("Graficas");
@@ -100,6 +113,14 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
             }
         });
         panelPrincipal.add(btn_graficas);
+
+        btn_reporte.setText("Reporte");
+        btn_reporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reporteActionPerformed(evt);
+            }
+        });
+        panelPrincipal.add(btn_reporte);
 
         panelGeneral.add(panelPrincipal, java.awt.BorderLayout.LINE_START);
 
@@ -116,6 +137,23 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         panelGeneral.validate();
         
     }//GEN-LAST:event_btn_graficasActionPerformed
+
+    private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
+        try {
+            // TODO add your handling code here:
+            String dir = "/home/erik/NetBeansProjects/mavenproject1/Proyecto_Hotel/src/vista/reporte.jrxml";
+            JasperReport reporteJasper = JasperCompileManager.compileReport(dir);
+            //JasperPrint mostrarReporte = JasperFillManager.fillReport(reporteJasper,null, con);
+            //JasperViewer.viewReport(mostrarReporte);
+        } catch (JRException ex) {
+            Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
+    }//GEN-LAST:event_btn_reporteActionPerformed
+
+    private void btn_reservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reservacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_reservacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,6 +195,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     private javax.swing.JButton btn_habitacion;
     private javax.swing.JButton btn_huesped;
     private javax.swing.JButton btn_pago;
+    private javax.swing.JButton btn_reporte;
     private javax.swing.JButton btn_reservacion;
     private javax.swing.JPanel panelGeneral;
     private javax.swing.JPanel panelPrincipal;

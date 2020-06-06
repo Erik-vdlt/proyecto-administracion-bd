@@ -40,7 +40,7 @@ public class TablaHuespedReservacion {
         btn_actualizar.setName("act");
         
         tm.setColumnIdentifiers(new Object[] {"Id Huesped","Nombre","Primer Ap","Segundo Ap","Id Reservacion","Reservacion",
-            "Ingreso","Salida"});
+            "Ingreso","Salida","Eliminar","Actualizar"});
         
         try{
             while(result.next()){
