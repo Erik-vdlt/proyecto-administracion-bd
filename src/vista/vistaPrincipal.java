@@ -5,6 +5,7 @@
  */
 package vista;
 
+import com.sun.jdi.connect.spi.Connection;
 import conexion.conexionBD;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -20,6 +21,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -58,7 +60,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_pago.addActionListener(this);
         btn_reservacion.addActionListener(this);
         
-        if(tipo == 2){
+        if(tipo == 1){
             btn_habitacion.setVisible(false);
             btn_pago.setVisible(false);
             btn_huesped.setVisible(false);
@@ -141,10 +143,18 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
         try {
             // TODO add your handling code here:
+            //Connection connection = null;
+            //connection = conexionBD.getConexionBD();
             String dir = "/home/erik/NetBeansProjects/mavenproject1/Proyecto_Hotel/src/vista/reporte.jrxml";
-            JasperReport reporteJasper = JasperCompileManager.compileReport(dir);
-            //JasperPrint mostrarReporte = JasperFillManager.fillReport(reporteJasper,null, con);
+            JasperReport reporteJasper = null;
+            reporteJasper = (JasperReport) JRLoader.loadObjectFromFile(dir);
+            //JasperPrint mostrarReporte = JasperFillManager.fillReport(dir,null, connection);
             //JasperViewer.viewReport(mostrarReporte);
+            //JasperViewer view = new JasperViewer(mostrarReporte,false);
+            
+            //view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            
+            //view.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }

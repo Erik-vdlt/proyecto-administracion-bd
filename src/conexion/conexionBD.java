@@ -64,9 +64,9 @@ public class conexionBD {
     }
     
     
-    public static conexionBD getConexionBD(String url,String bd){
+    public static conexionBD getConexionBD(){
         if(miConexionBD == null){
-            miConexionBD = new conexionBD(url, bd);
+            miConexionBD = new conexionBD();
         }
         return miConexionBD;
     }
@@ -76,10 +76,14 @@ public class conexionBD {
         this.bd=bd;
     }
     
+    private conexionBD(){
+        
+    }
+    
     public boolean conexion(){
         try {
             Class.forName("org.postgresql.Driver");
-            con = (DriverManager.getConnection(getUrl()+getBd(), "postgres", "root1"));
+            con = (DriverManager.getConnection("jdbc:postgresql://ruby.db.elephantsql.com:5432/xuvjidzf", "xuvjidzf", "EE68TH5LX3aT2JnabC6R3uQ5YPghbe1_"));
             //con = (DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_db","postgresql","root1"));
             flag = true;
         } catch (SQLException ex) {

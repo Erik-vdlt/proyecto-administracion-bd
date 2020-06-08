@@ -18,11 +18,10 @@ public class HuespedDAO {
     
     
     public boolean agregarHuesped(conexionBD conexion,Huesped hp){
-        String sql = "insert into huesped(nombre_huesped,primer_apellido_huesped,"
-                + "segundo_apellido_huesped,direccion,email,telefono,pais,identificacion) values('"+hp.getNombreHuesped()+"',"
-                + "'"+hp.getPrimerApellido()+"','"+hp.getSegundoApellido()+"','"+hp.getDireccion()+"',"
-                +"'"+hp.getEmail()+"','"+hp.getTelefono()+"','"+hp.getPais()+"',"
-                +String.valueOf(hp.isIdentificacion())+");";
+        String sql = "insert into huesped(nombre_huesped,primer_ap_huesped,"
+                + "segundo_ap_huesped,correo_huesped,telefono_huesped,ciudad,identificacion) values('"+hp.getNombreHuesped()+"',"
+                + "'"+hp.getPrimerApellido()+"','"+hp.getSegundoApellido()+"','"+hp.getEmail()+"',"
+                +"'"+hp.getTelefono()+"','"+hp.getPais()+"',"+String.valueOf(hp.isIdentificacion())+");";
         return conexion.ejecutarInstruccionSQL(sql);
     }
     

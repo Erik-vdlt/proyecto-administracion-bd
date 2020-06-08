@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class login extends javax.swing.JFrame {
     
-    conexionBD conexion = conexionBD.getConexionBD("jdbc:postgresql://127.0.0.1:5432/", "Hotel_DB");
+    conexionBD conexion = conexionBD.getConexionBD();
     //vistaPrincipal vp = new vistaPrincipal(conexion);
     loginDAO ldao = new loginDAO();
     

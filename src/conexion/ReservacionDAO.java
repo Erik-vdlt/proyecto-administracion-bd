@@ -25,7 +25,7 @@ public class ReservacionDAO {
                 +reservacion.getFechaIngreso()+"','"+reservacion.getFechaSalida()+"',"
                 +reservacion.getAdultos()+","+reservacion.getNinos()+","
                 +reservacion.getIdHuesped()+","+reservacion.getIdHabitacion()+");";
-        System.out.println(sql);
+        
         conexion.ejecutarInstruccionSQL(sql);
     }
     
