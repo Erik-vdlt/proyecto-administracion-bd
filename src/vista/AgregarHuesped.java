@@ -13,7 +13,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import modelo.TablaHuesped;
 
 /**
  *
@@ -22,6 +25,8 @@ import javax.swing.JTextField;
 public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
     conexionBD conexion;
     JButton btn_actualizar = new JButton("Actualizar");
+    TablaHuesped tb = new TablaHuesped();
+    JTable mod = new JTable();
     /**
      * Creates new form AgregarHuesped
      */
@@ -30,11 +35,17 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
         setLocationRelativeTo(null);
     }
     
-    public AgregarHuesped(conexionBD conexion) {
+    public AgregarHuesped(conexionBD conexion,JTable tabla) {
         this.conexion = conexion;
+        mod = tabla;
         initComponents();
         txt_nombre_hueped.addKeyListener(this);
+        txt_pa_huesped.addKeyListener(this);
+        txt_sa_huesped.addKeyListener(this);
+        txt_email_huesped.addKeyListener(this);
+        txt_telefono_huesped.addKeyListener(this);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     /**
@@ -50,7 +61,6 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -58,13 +68,12 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
         txt_nombre_hueped = new javax.swing.JTextField();
         txt_pa_huesped = new javax.swing.JTextField();
         txt_sa_huesped = new javax.swing.JTextField();
-        txt_direccion_hueped = new javax.swing.JTextField();
         txt_email_huesped = new javax.swing.JTextField();
         txt_telefono_huesped = new javax.swing.JTextField();
         cmb_pais_huesped = new javax.swing.JComboBox<>();
         cmb_identificacion_huesped = new javax.swing.JComboBox<>();
         btn_aceptar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,8 +85,6 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
         jLabel3.setText("Primer Apellido");
 
         jLabel4.setText("Segundo Apellido");
-
-        jLabel5.setText("Direccion");
 
         jLabel6.setText("Email");
 
@@ -97,6 +104,7 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
 
         cmb_identificacion_huesped.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "true", "false", " " }));
 
+        btn_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar.png"))); // NOI18N
         btn_aceptar.setText("Aceptar");
         btn_aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +112,14 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
             }
         });
 
-        jButton2.setText("Cancelar");
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eliminar.png"))); // NOI18N
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,35 +128,40 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
             .addGroup(layout.createSequentialGroup()
                 .addGap(106, 106, 106)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addContainerGap(196, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cmb_identificacion_huesped, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmb_pais_huesped, 0, 115, Short.MAX_VALUE)
-                    .addComponent(txt_telefono_huesped)
-                    .addComponent(txt_email_huesped)
-                    .addComponent(txt_direccion_hueped)
-                    .addComponent(txt_sa_huesped)
-                    .addComponent(txt_pa_huesped)
-                    .addComponent(txt_nombre_hueped))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmb_identificacion_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txt_sa_huesped)
+                        .addComponent(txt_pa_huesped)
+                        .addComponent(txt_nombre_hueped)
+                        .addComponent(txt_email_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_telefono_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmb_pais_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,10 +182,6 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
                     .addComponent(txt_sa_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_direccion_hueped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txt_email_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
@@ -183,7 +199,7 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_aceptar)
-                    .addComponent(jButton2))
+                    .addComponent(btn_cancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -198,55 +214,144 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
         // TODO add your handling code here:
         Huesped h = new Huesped();
         HuespedDAO hdao = new HuespedDAO();
-        h.setNombreHuesped(txt_nombre_hueped.getText());
-        h.setPrimerApellido(txt_pa_huesped.getText());
-        h.setSegundoApellido(txt_sa_huesped.getText());
-        h.setDireccion(txt_direccion_hueped.getText());
-        h.setEmail(txt_email_huesped.getText());
-        h.setTelefono(txt_telefono_huesped.getText());
-        h.setPais(String.valueOf(cmb_pais_huesped.getSelectedItem()));
-        h.setIdentificacion(Boolean.valueOf(String.valueOf(cmb_identificacion_huesped.getSelectedItem())));
-        System.out.println(conexion);
-        if(hdao.agregarHuesped(conexion, h)){
-            System.out.println("inserccion exitosa");
+        
+        boolean x = false,x1= false,x2= false,x3= false,x5= false;
+        
+        
+        if(txt_nombre_hueped.getText().equalsIgnoreCase("")){
+           JOptionPane.showMessageDialog(rootPane, "la caja nombre esta vacia");
+           x = true;
+           System.out.println(x);
         }
+        if(txt_pa_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja primer apellido esta vacia");
+            x1 = true;
+            System.out.println(x1);
+        }
+        if(txt_pa_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja segundo apellido esta vacia");
+            x2 = true;
+            System.out.println(x2);
+        }
+        if(txt_email_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja correo esta vacia");
+            x3 = true;
+            System.out.println(x3);
+        }
+        if(txt_telefono_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja telefono esta vacia");
+            x5 = true;
+            System.out.println(x5);
+        }
+        else{
+            
+        }
+        
+        if(x && x1 && x2 && x3  && x5){
+            
+        }
+        else{
+            h.setNombreHuesped(txt_nombre_hueped.getText());
+            h.setPrimerApellido(txt_pa_huesped.getText());
+            h.setSegundoApellido(txt_sa_huesped.getText());
+            
+            h.setEmail(txt_email_huesped.getText());
+            h.setTelefono(txt_telefono_huesped.getText());
+            h.setPais(String.valueOf(cmb_pais_huesped.getSelectedItem()));
+            h.setIdentificacion(Boolean.valueOf(String.valueOf(cmb_identificacion_huesped.getSelectedItem())));
+            
+            if(hdao.agregarHuesped(conexion, h)){
+                
+                tb.ver_tabla(mod, conexion);
+                JOptionPane.showMessageDialog(rootPane, "inserccion exitosa");
+                this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+            }
+        }
+        
+        
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
-    public void accionActualizarRegistro(Huesped h,conexionBD co){
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        // TODO add your handling code here:
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    public void accionActualizarRegistro(Huesped h,conexionBD co,JTable tabla){
+        
+        btn_aceptar.setVisible(false);
+        btn_actualizar.setBounds(170, 405, 115, 28);
+        getContentPane().add(btn_actualizar);
+        
+        boolean x = false,x1= false,x2= false,x3= false,x5= false;
         
         txt_nombre_hueped.setText(h.getNombreHuesped());
         txt_pa_huesped.setText(h.getPrimerApellido());
         txt_sa_huesped.setText(h.getSegundoApellido());
-        txt_direccion_hueped.setText(h.getDireccion());
         txt_email_huesped.setText(h.getEmail());
         txt_telefono_huesped.setText(h.getTelefono());
-        System.out.println("si accede al metodo accionActualizarRegistro linea 219");
-        btn_actualizar.addActionListener(new ActionListener() {
+        
+        
+        if(txt_nombre_hueped.getText().equalsIgnoreCase("")){
+           JOptionPane.showMessageDialog(rootPane, "la caja nombre esta vacia");
+           x = true;
+           System.out.println(x);
+        }
+        if(txt_pa_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja primer apellido esta vacia");
+            x1 = true;
+            System.out.println(x1);
+        }
+        if(txt_pa_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja segundo apellido esta vacia");
+            x2 = true;
+            System.out.println(x2);
+        }
+        if(txt_email_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja correo esta vacia");
+            x3 = true;
+            System.out.println(x3);
+        }
+        if(txt_telefono_huesped.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(rootPane, "la caja telefono esta vacia");
+            x5 = true;
+            System.out.println(x5);
+        }
+        else{
+            
+        }
+        
+        if(x && x1 && x2 && x3  && x5){
+            
+        }
+        else{
+        
+            btn_actualizar.addActionListener(new ActionListener() {
             
             
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Huesped h1 = new Huesped();
-                HuespedDAO hdao = new HuespedDAO();
-                h1.setIdHuesped(h.getIdHuesped());
-                h1.setNombreHuesped(txt_nombre_hueped.getText());
-                h1.setPrimerApellido(txt_pa_huesped.getText());
-                h1.setSegundoApellido(txt_sa_huesped.getText());
-                h1.setDireccion(txt_direccion_hueped.getText());
-                h1.setEmail(txt_email_huesped.getText());
-                h1.setTelefono(txt_telefono_huesped.getText());
-                h1.setPais(String.valueOf(cmb_pais_huesped.getSelectedItem()));
-                h1.setIdentificacion(Boolean.valueOf(String.valueOf(cmb_identificacion_huesped.getSelectedItem())));
-                System.out.println(co);
-                if(hdao.actualizarHuesped(co, h1)){
-                    System.out.println("inserccion exitosa");
-                }
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    Huesped h1 = new Huesped();
+                    HuespedDAO hdao = new HuespedDAO();
+                    h1.setIdHuesped(h.getIdHuesped());
+                    h1.setNombreHuesped(txt_nombre_hueped.getText());
+                    h1.setPrimerApellido(txt_pa_huesped.getText());
+                    h1.setSegundoApellido(txt_sa_huesped.getText());
+                    h1.setEmail(txt_email_huesped.getText());
+                    h1.setTelefono(txt_telefono_huesped.getText());
+                    h1.setPais(String.valueOf(cmb_pais_huesped.getSelectedItem()));
+                    h1.setIdentificacion(Boolean.valueOf(String.valueOf(cmb_identificacion_huesped.getSelectedItem())));
+                    System.out.println(co);
+                    if(hdao.actualizarHuesped(co, h1)){
+                        tb.ver_tabla(tabla, conexion);
+                        JOptionPane.showMessageDialog(rootPane, "actualizacion exitosa");
+                    }
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        btn_aceptar.setVisible(false);
-        btn_actualizar.setBounds(170, 405, 115, 28);
-        getContentPane().add(btn_actualizar);
+        }
+        
+        
+        
         //btn_actualizar.addActionListener();
     }
     
@@ -287,19 +392,17 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
+    private javax.swing.JButton btn_cancelar;
     private javax.swing.JComboBox<String> cmb_identificacion_huesped;
     private javax.swing.JComboBox<String> cmb_pais_huesped;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txt_direccion_hueped;
     private javax.swing.JTextField txt_email_huesped;
     private javax.swing.JTextField txt_nombre_hueped;
     private javax.swing.JTextField txt_pa_huesped;
@@ -309,16 +412,35 @@ public class AgregarHuesped extends javax.swing.JFrame implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        if(ke.getComponent().equals(txt_nombre_hueped) || ke.getComponent().equals(txt_pa_huesped)){
+        
+        
+        if(ke.getComponent().equals(txt_nombre_hueped) || ke.getComponent().equals(txt_pa_huesped) || 
+                ke.getComponent().equals(txt_sa_huesped)){
             if(Character.isAlphabetic(ke.getKeyChar())){
-                System.out.println("alfabeto");
+                
             }
             else{
                 ke.consume();
-                System.out.println("no alfabeto");
-            }
-                
+            }     
         }
+        else if(ke.getComponent().equals(txt_telefono_huesped)){
+            if(Character.isDigit(ke.getKeyChar())){
+                
+            }
+            else{
+                ke.consume();
+            }
+        }
+        else if(ke.getComponent().equals(txt_email_huesped)){
+            if(Character.isLetterOrDigit(ke.getKeyChar()) || Character.isSpaceChar(ke.getKeyChar())){
+                
+            }
+            else{
+                ke.consume();
+            }
+        }
+        //ke.getComponent().equals(txt_pa_huesped)
+          //      || ke.getComponent().equals(txt_sa_huesped)
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

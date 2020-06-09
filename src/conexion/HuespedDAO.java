@@ -18,25 +18,29 @@ public class HuespedDAO {
     
     
     public boolean agregarHuesped(conexionBD conexion,Huesped hp){
-        String sql = "insert into huesped(nombre_huesped,primer_ap_huesped,"
+       /* String sql = "insert into huesped(nombre_huesped,primer_ap_huesped,"
                 + "segundo_ap_huesped,correo_huesped,telefono_huesped,ciudad,identificacion) values('"+hp.getNombreHuesped()+"',"
                 + "'"+hp.getPrimerApellido()+"','"+hp.getSegundoApellido()+"','"+hp.getEmail()+"',"
-                +"'"+hp.getTelefono()+"','"+hp.getPais()+"',"+String.valueOf(hp.isIdentificacion())+");";
-        return conexion.ejecutarInstruccionSQL(sql);
+                +"'"+hp.getTelefono()+"','"+hp.getPais()+"',"+String.valueOf(hp.isIdentificacion())+");";*/
+       String sql = "insert into  huesped(nombre_huesped,primer_ap_huesped,segundo_ap_huesped,correo_huesped,"
+               + "telefono_huesped,ciudad,identificacion,fk_huesped_usuario) values(?,?,?,?,?,?,?,?)";
+        return conexion.ejecutarInstruccionInjecction(sql,hp);
     }
     
     public boolean eliminarHuesped(conexionBD conexion,int id){
-        String sql = "delete from huesped where id_huesped = "+id;
-        return conexion.ejecutarInstruccionSQL(sql);
+        String sql = "delete from huesped where id_huesped = ?";
+        return conexion.eliminaHuesped(sql,id);
     }
     
     public boolean actualizarHuesped(conexionBD conexion,Huesped h){
-        String sql = "update huesped set nombre_huesped = '"+h.getNombreHuesped()+"',primer_apellido_huesped = '"+h.getPrimerApellido()
+        /*String sql = "update huesped set nombre_huesped = '"+h.getNombreHuesped()+"',primer_apellido_huesped = '"+h.getPrimerApellido()
                 +"',segundo_apellido_huesped = '"+h.getSegundoApellido()+"',direccion = '"+h.getDireccion()+"',email = '"+h.getEmail()
                 +"',telefono = '"+h.getTelefono()+"',pais = '"+h.getPais()+"',identificacion = "+h.isIdentificacion()
-                +" where id_huesped = "+h.getIdHuesped()+";";
+                +" where id_huesped = "+h.getIdHuesped()+";";*/
+        String sql = "update huesped set nombre_huesped = ?,primer_ap_huesped = ?,segundo_ap_huesped = ?,"
+                + "correo_huesped = ?,telefono_huesped = ?,ciudad = ?, identificacion = ? where id_huesped = ?";
         
-        return conexion.ejecutarInstruccionSQL(sql);    
+        return conexion.actualizarHuespedInjection(sql, h);    
     }
     
     public ArrayList huespedes(conexionBD conexion){

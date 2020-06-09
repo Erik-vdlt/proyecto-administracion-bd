@@ -48,16 +48,6 @@
                 <Property name="text" type="java.lang.String" value="Huesped"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_habitacion">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Habitacion"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btn_pago">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Pago"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="btn_reservacion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reservacion"/>

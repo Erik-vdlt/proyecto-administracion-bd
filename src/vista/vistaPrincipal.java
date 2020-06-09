@@ -5,7 +5,8 @@
  */
 package vista;
 
-import com.sun.jdi.connect.spi.Connection;
+//import com.sun.jdi.connect.spi.Connection;
+import java.sql.Connection;
 import conexion.conexionBD;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -45,8 +46,6 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         setSize(900, 400);
         setLocationRelativeTo(null);
         btn_huesped.addActionListener(this);
-        btn_habitacion.addActionListener(this);
-        btn_pago.addActionListener(this);
         //panelGeneral.add(hp,java.awt.BorderLayout.CENTER);
     }
     
@@ -56,13 +55,9 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         setSize(900, 400);
         setLocationRelativeTo(null);
         btn_huesped.addActionListener(this);
-        btn_habitacion.addActionListener(this);
-        btn_pago.addActionListener(this);
         btn_reservacion.addActionListener(this);
-        
-        if(tipo == 1){
-            btn_habitacion.setVisible(false);
-            btn_pago.setVisible(false);
+        setTitle("Hotel");
+        if(tipo == 2){
             btn_huesped.setVisible(false);
         }
     }
@@ -79,8 +74,6 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         panelGeneral = new javax.swing.JPanel();
         panelPrincipal = new javax.swing.JPanel();
         btn_huesped = new javax.swing.JButton();
-        btn_habitacion = new javax.swing.JButton();
-        btn_pago = new javax.swing.JButton();
         btn_reservacion = new javax.swing.JButton();
         btn_graficas = new javax.swing.JButton();
         btn_reporte = new javax.swing.JButton();
@@ -93,12 +86,6 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
 
         btn_huesped.setText("Huesped");
         panelPrincipal.add(btn_huesped);
-
-        btn_habitacion.setText("Habitacion");
-        panelPrincipal.add(btn_habitacion);
-
-        btn_pago.setText("Pago");
-        panelPrincipal.add(btn_pago);
 
         btn_reservacion.setText("Reservacion");
         btn_reservacion.addActionListener(new java.awt.event.ActionListener() {
@@ -143,18 +130,20 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
         try {
             // TODO add your handling code here:
-            //Connection connection = null;
-            //connection = conexionBD.getConexionBD();
-            String dir = "/home/erik/NetBeansProjects/mavenproject1/Proyecto_Hotel/src/vista/reporte.jrxml";
+            Connection connection = null;
+            
+            connection =  (Connection) con.conexionReporte();
+            var dir = "/home/erik/NetBeansProjects/mavenproject1/Proyecto_Hotel/src/vista/reporte.jasper";
             JasperReport reporteJasper = null;
             reporteJasper = (JasperReport) JRLoader.loadObjectFromFile(dir);
-            //JasperPrint mostrarReporte = JasperFillManager.fillReport(dir,null, connection);
+            System.out.println(connection);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(dir,null, connection);
             //JasperViewer.viewReport(mostrarReporte);
-            //JasperViewer view = new JasperViewer(mostrarReporte,false);
+            JasperViewer view = new JasperViewer(mostrarReporte,false);
             
-            //view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             
-            //view.setVisible(true);
+            view.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -202,9 +191,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_graficas;
-    private javax.swing.JButton btn_habitacion;
     private javax.swing.JButton btn_huesped;
-    private javax.swing.JButton btn_pago;
     private javax.swing.JButton btn_reporte;
     private javax.swing.JButton btn_reservacion;
     private javax.swing.JPanel panelGeneral;
@@ -214,8 +201,6 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getActionCommand().equalsIgnoreCase("huesped")){
-            
-                System.out.println("funciona");
                 
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     @Override
@@ -233,9 +218,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
                 panelGeneral.validate();
                     }
                 });
-                if(vh.isVisible() || vp.isVisible() || vhr.isVisible()){
-                    vh.setVisible(false);
-                    vp.setVisible(false);
+                if(vhr.isVisible()){
                     vhr.setVisible(false);
                 }
                 
@@ -246,35 +229,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
                 //hp = new VistaHuesped(con);
             
         }
-        else if(ae.getActionCommand().equalsIgnoreCase("habitacion")){
-            System.out.println("funciona 1");
-            vh = new vistaHabitacion();
-            
-            vh.setVisible(true);
-            panelGeneral.add(vh,java.awt.BorderLayout.CENTER);
-            panelGeneral.validate();
-            
-            if(hp.isVisible() || vp.isVisible() || vhr.isVisible()){
-                    hp.setVisible(false);
-                    vp.setVisible(false);
-                    vhr.setVisible(false);
-                }
-        }
-        else if(ae.getActionCommand().equalsIgnoreCase("pago")){
-            System.out.println("funciona 2");
-            vp = new vistaPago();
-            
-            vp.setVisible(true);
-            panelGeneral.add(vp,java.awt.BorderLayout.CENTER);
-            panelGeneral.validate();
-            if(hp.isVisible() || vh.isVisible() || vhr.isVisible()){
-                hp.setVisible(false);
-                vh.setVisible(false);
-                vhr.setVisible(false);
-            }
-        }
         else if(ae.getActionCommand().equalsIgnoreCase("reservacion")){
-            System.out.println("funciona 3");
             
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -287,10 +242,8 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
             });
             
             //vhr = new VistaHuespedReservacion(con);
-            if(hp.isVisible() || vh.isVisible() || vp.isVisible()){
+            if(hp.isVisible()){
                 hp.setVisible(false);
-                vh.setVisible(false);
-                vp.setVisible(false);
             }
             /*vhr.setVisible(true);
             panelGeneral.add(vhr,java.awt.BorderLayout.CENTER);

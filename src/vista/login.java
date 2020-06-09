@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package vista;
+import com.sun.jdi.connect.spi.Connection;
 import conexion.conexionBD;
 import conexion.loginDAO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +27,7 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Login");
     }
 
     /**
@@ -128,7 +131,7 @@ public class login extends javax.swing.JFrame {
                 break;
             }
             else{
-                System.out.println("vista.login.btn_aceptarActionPerformed() "+String.valueOf(listaUser.get(i))+String.valueOf(listaUser.get(i)));
+                JOptionPane.showMessageDialog(rootPane, "usuario y/o contraseña incorrecto");
             }
         }
     }//GEN-LAST:event_btn_aceptarActionPerformed

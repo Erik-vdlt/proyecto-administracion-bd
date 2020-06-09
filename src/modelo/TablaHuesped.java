@@ -34,7 +34,9 @@ public class TablaHuesped {
         ResultSet result = conexion.consultarRegistros(sql);
         JButton btn_eliminar = new JButton("Eliminar");
         btn_eliminar.setName("elm");
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eliminar.png")));
         JButton btn_actualizar = new JButton("Acutalizar");
+        btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/actualizar.png")));
         btn_actualizar.setName("act");
         
         tm.setColumnIdentifiers(new Object[] {"Id","Nombre","Primer Ap","Segundo Ap","Correo",
@@ -98,7 +100,7 @@ public class TablaHuesped {
                         btn_actualizar});
             }
             tablaHuesped.setModel(tm);
-            tablaHuesped.setRowHeight(30);
+            tablaHuesped.setRowHeight(50);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

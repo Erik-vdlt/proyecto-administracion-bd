@@ -15,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import modelo.TablaHuespedReservacion;
 
 /**
  *
@@ -23,6 +26,8 @@ import javax.swing.JButton;
 public class VistaAgregarReservacion extends javax.swing.JFrame {
 
     conexion.conexionBD con;
+    JTable tabla;
+    TablaHuespedReservacion thr = new TablaHuespedReservacion();
     
     /**
      * Creates new form VistaAgregarReservacion
@@ -31,8 +36,9 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
         initComponents();
     }
     
-    public VistaAgregarReservacion(conexion.conexionBD conexion) {
+    public VistaAgregarReservacion(conexion.conexionBD conexion, JTable tabla) {
         initComponents();
+        this.tabla = tabla;
         con = conexion;
         setLocationRelativeTo(null);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -115,6 +121,7 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
 
         cmb_mes_sal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 
+        btn_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar.png"))); // NOI18N
         btn_aceptar.setText("Aceptar");
         btn_aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,7 +129,9 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
             }
         });
 
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eliminar.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
+        btn_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jLabel8.setText("Huesped");
 
@@ -179,14 +188,14 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(cmb_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -252,6 +261,8 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
         r.setIdHuesped(Integer.parseInt(cmb_huesped.getSelectedItem().toString().substring(0, 1)));
         
         rdao.agregarReservacion(con,r);
+        thr.ver_tabla(tabla, con);
+        JOptionPane.showMessageDialog(rootPane, "inserccion exitosa");
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     public int habitaciones(String hab){
@@ -326,7 +337,7 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
     public void actualizarReservacion(conexionBD conexion, Reservacion reser){
         cmb_huesped.setSelectedItem(reser.getIdHuesped());
         JButton actualizar = new JButton("Actualizar");
-        actualizar.setBounds(190, 395, 130, 30);
+        actualizar.setBounds(220, 398, 130, 28);
         btn_aceptar.setVisible(false);
         add(actualizar);
         
@@ -352,6 +363,8 @@ public class VistaAgregarReservacion extends javax.swing.JFrame {
                 r.setNinos(Byte.parseByte(sp_nino.getValue().toString()));
                 r.setIdHuesped(Integer.parseInt(cmb_huesped.getSelectedItem().toString().substring(0, 1)));
                 rdao.actualizarHuesped(con, r);
+                thr.ver_tabla(tabla, con);
+                JOptionPane.showMessageDialog(rootPane, "actualizacion exitosa");
             }
         });
     }

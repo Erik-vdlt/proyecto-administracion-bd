@@ -76,6 +76,7 @@ public class VistaHuespedReservacion extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Reservacion");
 
+        btn_agregar_huesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar.png"))); // NOI18N
         btn_agregar_huesped.setText("Agregar");
         btn_agregar_huesped.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +121,7 @@ public class VistaHuespedReservacion extends javax.swing.JPanel {
 
     private void btn_agregar_huespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_huespedActionPerformed
         // TODO add your handling code here:
-        VistaAgregarReservacion var = new VistaAgregarReservacion(con);
+        VistaAgregarReservacion var = new VistaAgregarReservacion(con,tablaReservaciones);
         var.setVisible(true);
     }//GEN-LAST:event_btn_agregar_huespedActionPerformed
 
@@ -142,7 +143,7 @@ public class VistaHuespedReservacion extends javax.swing.JPanel {
                     tablaHR.ver_tabla(tablaReservaciones, con);
                 }
                 else if(boton.getName().equalsIgnoreCase("act")){
-                    VistaAgregarReservacion viar = new VistaAgregarReservacion(con);
+                    VistaAgregarReservacion viar = new VistaAgregarReservacion(con,tablaReservaciones);
                     Reservacion r = new Reservacion();
                     r.setIdReservacion(Integer.parseInt(String.valueOf(tablaReservaciones.getValueAt(row, 4))));
                     r.setFechaReservacion(String.valueOf(tablaReservaciones.getValueAt(row, 5)));

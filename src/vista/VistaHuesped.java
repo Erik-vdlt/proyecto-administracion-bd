@@ -59,8 +59,10 @@ public class VistaHuesped extends javax.swing.JPanel {
             }
         });
 
+        btn_buscar_huesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/busqueda.png"))); // NOI18N
         btn_buscar_huesped.setText("Buscar");
 
+        btn_agregar_huesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar.png"))); // NOI18N
         btn_agregar_huesped.setText("Agregar");
         btn_agregar_huesped.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +110,7 @@ public class VistaHuesped extends javax.swing.JPanel {
                         .addComponent(btn_buscar_huesped)
                         .addGap(18, 18, 18)
                         .addComponent(btn_agregar_huesped)))
-                .addContainerGap(526, Short.MAX_VALUE))
+                .addContainerGap(453, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
@@ -123,15 +125,15 @@ public class VistaHuesped extends javax.swing.JPanel {
                     .addComponent(btn_agregar_huesped))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_agregar_huespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_huespedActionPerformed
         // TODO add your handling code here:
-        System.out.println("vista.Huesped.btn_agregar_huespedActionPerformed()"+ co);
-        AgregarHuesped ah = new AgregarHuesped(co);
+        AgregarHuesped ah = new AgregarHuesped(co,tbl_huesped);
         ah.setVisible(true);
+        
     }//GEN-LAST:event_btn_agregar_huespedActionPerformed
 
     private void tbl_huespedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_huespedMouseClicked
@@ -148,19 +150,19 @@ public class VistaHuesped extends javax.swing.JPanel {
                 if(boton.getName().equalsIgnoreCase("elm")){
                     int valor = Integer.parseInt(String.valueOf(tbl_huesped.getValueAt(row, 0)));
                     hdao.eliminarHuesped(co, valor);
+                    tb.ver_tabla(tbl_huesped, co);
                 }
                 else if(boton.getName().equalsIgnoreCase("act")){
-                    AgregarHuesped ah = new AgregarHuesped();
+                    AgregarHuesped ah = new AgregarHuesped(co,tbl_huesped);
                     Huesped h = new Huesped();
                     h.setIdHuesped(Integer.parseInt(String.valueOf(tbl_huesped.getValueAt(row, 0))));
                     h.setNombreHuesped(String.valueOf(tbl_huesped.getValueAt(row, 1)));
                     h.setPrimerApellido(String.valueOf(tbl_huesped.getValueAt(row, 2)));
                     h.setSegundoApellido(String.valueOf(tbl_huesped.getValueAt(row, 3)));
-                    h.setDireccion(String.valueOf(tbl_huesped.getValueAt(row, 4)));
-                    h.setEmail(String.valueOf(tbl_huesped.getValueAt(row, 5)));
-                    h.setTelefono(String.valueOf(tbl_huesped.getValueAt(row, 2)));
+                    h.setEmail(String.valueOf(tbl_huesped.getValueAt(row, 4)));
+                    h.setTelefono(String.valueOf(tbl_huesped.getValueAt(row, 5)));
                     
-                    ah.accionActualizarRegistro(h,co);
+                    ah.accionActualizarRegistro(h,co,tbl_huesped);
                     ah.setVisible(true);
                 }
             }

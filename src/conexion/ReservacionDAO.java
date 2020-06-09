@@ -58,7 +58,7 @@ public class ReservacionDAO {
     
     public void datosGrafica(conexionBD conexion,ArrayList meses,ArrayList huespedes){
         try {
-            String sql = "select count(fecha_reservacion),fk_huesped_reservacion from reservacion group by fk_huesped_reservacion;";
+            String sql = "select date_part('month',fecha_reservacion),count(fk_huesped_reservacion) from reservacion group by date_part('month',fecha_reservacion);";
             
             ResultSet rs = conexion.consultarRegistros(sql);
             

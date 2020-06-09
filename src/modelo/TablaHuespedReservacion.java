@@ -49,7 +49,7 @@ public class TablaHuespedReservacion {
                         result.getString(2),
                         result.getString(3),
                         result.getString(4),
-                        result.getString(5),
+                        result.getInt(5),
                         result.getString(6),
                         result.getString(7),
                         result.getString(8),

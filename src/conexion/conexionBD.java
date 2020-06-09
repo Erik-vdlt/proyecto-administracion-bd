@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Huesped;
 
 /**
  *
@@ -71,6 +72,20 @@ public class conexionBD {
         return miConexionBD;
     }
     
+    public  Connection conexionReporte(){
+        if(con == null){
+            try {
+                Class.forName("org.postgresql.Driver");
+                con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_DB", "postgres", "root1");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return con;
+    }
+    
     private conexionBD(String url,String bd){
         this.url=url;
         this.bd=bd;
@@ -83,7 +98,7 @@ public class conexionBD {
     public boolean conexion(){
         try {
             Class.forName("org.postgresql.Driver");
-            con = (DriverManager.getConnection("jdbc:postgresql://ruby.db.elephantsql.com:5432/xuvjidzf", "xuvjidzf", "EE68TH5LX3aT2JnabC6R3uQ5YPghbe1_"));
+            con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_DB","postgres","root1");
             //con = (DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_db","postgresql","root1"));
             flag = true;
         } catch (SQLException ex) {
@@ -105,6 +120,63 @@ public class conexionBD {
         }
         catch(SQLException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean ejecutarInstruccionInjecction(String sql,Huesped h) {
+        boolean x = false;
+        try {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, h.getNombreHuesped());
+            pstmt.setString(2, h.getPrimerApellido());
+            pstmt.setString(3, h.getSegundoApellido());
+            pstmt.setString(4, h.getEmail());
+            pstmt.setString(5, h.getCiudad());
+            pstmt.setString(6, h.getTelefono());
+            pstmt.setBoolean(7, h.isIdentificacion());
+            pstmt.setInt(8, 1);
+            pstmt.executeUpdate();
+            //stm = con.prepareStatement(sql);
+            //stm.executeUpdate(sql);
+            x = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x;
+    }
+    
+    public boolean actualizarHuespedInjection(String sql,Huesped h) {
+        boolean x = false;
+        try {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, h.getNombreHuesped());
+            pstmt.setString(2, h.getPrimerApellido());
+            pstmt.setString(3, h.getSegundoApellido());
+            pstmt.setString(4, h.getEmail());
+            pstmt.setString(5, h.getTelefono());
+            pstmt.setString(6, h.getCiudad());
+            pstmt.setBoolean(7, h.isIdentificacion());
+            pstmt.setInt(8, h.getIdHuesped());
+            pstmt.executeUpdate();
+            //stm = con.prepareStatement(sql);
+            //stm.executeUpdate(sql);
+            x = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return x;
+    }
+    
+    public boolean eliminaHuesped(String sql,int id){
+        int ejecucion=0;
+        try {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            return ejecucion==1?true:false;
+        } catch (SQLException ex) {
+            Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

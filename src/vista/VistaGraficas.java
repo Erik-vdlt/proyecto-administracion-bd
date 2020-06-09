@@ -6,6 +6,7 @@
 package vista;
 import conexion.ReservacionDAO;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -39,18 +40,64 @@ public class VistaGraficas extends javax.swing.JPanel {
         ReservacionDAO rdao = new ReservacionDAO();
         ArrayList meses = new ArrayList();
         ArrayList huespedes = new ArrayList();
-        System.out.println("vista.VistaGraficas.graficaMensual()");
         rdao.datosGrafica(con, meses, huespedes);
         for (int i = 0; i < meses.size(); i++) {  
-            datos.addValue(Integer.parseInt(meses.get(i).toString()), "meses", String.valueOf(huespedes.get(i)));
+            //datos.addValue(Integer.parseInt(String.valueOf(huespedes.get(i))), mesInverso((int) meses.get(i)),"");
+            datos.setValue((Number) huespedes.get(i),  mesInverso((int) meses.get(i)), "");
         }
         
-        Grafica = ChartFactory.createBarChart3D("Meses", "Huespedes", "Cantidad", datos,PlotOrientation.HORIZONTAL,
+        Grafica = ChartFactory.createBarChart3D("Hotel", "Cantidad", "Huespedes", datos,PlotOrientation.VERTICAL,
                 true, true, false);
         
         ChartPanel panel = new ChartPanel(Grafica);
-
-        add(panel);
+        JFrame Ventana = new JFrame("JFreeChart");
+        Ventana.getContentPane().add(panel);
+        Ventana.pack();
+        Ventana.setVisible(true);
+        Ventana.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }
+    
+    public String mesInverso(int val){
+        String mes = "";
+        switch(val){
+            case 1:
+                mes = "Enero";
+                break;
+            case 2:
+                mes = "Febrero";
+                break;
+            case 3:
+                mes = "Marzo";
+                break;
+            case 4:
+                mes = "Abril";
+                break;
+            case 5:
+                mes = "Mayo";
+                break;
+            case 6:
+                mes = "Junio";
+                break;
+            case 7:
+                mes = "Julio";
+                break;
+            case 8:
+                mes = "Agosto";
+                break;
+            case 9:
+                mes = "Septiembre";
+                break;
+            case 10:
+                mes = "Octubre";
+                break;
+            case 11:
+                mes = "Noviembre";
+                break;
+            case 12:
+                mes = "Diciembre";
+                break;   
+        }
+        return mes;
     }
 
     /**
