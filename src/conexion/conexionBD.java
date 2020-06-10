@@ -76,7 +76,7 @@ public class conexionBD {
         if(con == null){
             try {
                 Class.forName("org.postgresql.Driver");
-                con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_DB", "postgres", "root1");
+                con = DriverManager.getConnection("jdbc:postgresql://ruby.db.elephantsql.com:5432/xuvjidzf", "xuvjidzf", "EE68TH5LX3aT2JnabC6R3uQ5YPghbe1_");
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -98,7 +98,7 @@ public class conexionBD {
     public boolean conexion(){
         try {
             Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_DB","postgres","root1");
+            con = DriverManager.getConnection("jdbc:postgresql://ruby.db.elephantsql.com:5432/xuvjidzf","xuvjidzf","EE68TH5LX3aT2JnabC6R3uQ5YPghbe1_");
             //con = (DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Hotel_db","postgresql","root1"));
             flag = true;
         } catch (SQLException ex) {
@@ -202,5 +202,13 @@ public class conexionBD {
             e.printStackTrace();
 	}
 	return rs;
+    }
+    
+    public void cerrarConexion(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(conexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

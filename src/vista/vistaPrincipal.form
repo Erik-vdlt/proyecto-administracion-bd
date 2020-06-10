@@ -33,6 +33,11 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="panelPrincipal">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cd" green="80" red="31" type="rgb"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
               <BorderConstraints direction="Before"/>
@@ -45,11 +50,17 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btn_huesped">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/agregar h.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Huesped"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btn_reservacion">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/reservacion.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Reservacion"/>
               </Properties>
               <Events>
@@ -58,6 +69,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_graficas">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/grafico.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Graficas"/>
               </Properties>
               <Events>
@@ -66,6 +80,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_reporte">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/analisis.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Reporte"/>
               </Properties>
               <Events>

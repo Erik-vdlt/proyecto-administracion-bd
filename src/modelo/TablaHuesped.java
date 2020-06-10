@@ -74,6 +74,9 @@ public class TablaHuesped {
                 return false;
             }
         };
+        String m = valor.substring(0, 1).toUpperCase();
+        valor = valor.replace(valor.substring(0, 1), m);
+        System.out.println(valor);
         String sql = "select * from huesped where "+clave+" like '%"+valor+"%';";
         ResultSet result = conexion.consultarRegistros(sql);
         JButton btn_eliminar = new JButton("Eliminar");

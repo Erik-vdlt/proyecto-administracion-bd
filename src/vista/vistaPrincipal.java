@@ -6,6 +6,7 @@
 package vista;
 
 //import com.sun.jdi.connect.spi.Connection;
+import conexion.ReservacionDAO;
 import java.sql.Connection;
 import conexion.conexionBD;
 import java.awt.BorderLayout;
@@ -14,8 +15,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -24,6 +27,11 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -39,6 +47,8 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
     vistaHabitacion vh;
     vistaPago vp;
     VistaHuespedReservacion vhr;
+    DefaultCategoryDataset datos = new DefaultCategoryDataset();
+    JFreeChart Grafica;
     
     
     public vistaPrincipal() {
@@ -57,7 +67,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         btn_huesped.addActionListener(this);
         btn_reservacion.addActionListener(this);
         setTitle("Hotel");
-        if(tipo == 2){
+        if(tipo == 1){
             btn_huesped.setVisible(false);
         }
     }
@@ -82,11 +92,14 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
 
         panelGeneral.setLayout(new java.awt.BorderLayout());
 
+        panelPrincipal.setBackground(new java.awt.Color(49, 128, 205));
         panelPrincipal.setLayout(new javax.swing.BoxLayout(panelPrincipal, javax.swing.BoxLayout.PAGE_AXIS));
 
+        btn_huesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar h.jpg"))); // NOI18N
         btn_huesped.setText("Huesped");
         panelPrincipal.add(btn_huesped);
 
+        btn_reservacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/reservacion.jpg"))); // NOI18N
         btn_reservacion.setText("Reservacion");
         btn_reservacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +108,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         });
         panelPrincipal.add(btn_reservacion);
 
+        btn_graficas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/grafico.png"))); // NOI18N
         btn_graficas.setText("Graficas");
         btn_graficas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +117,7 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
         });
         panelPrincipal.add(btn_graficas);
 
+        btn_reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/analisis.png"))); // NOI18N
         btn_reporte.setText("Reporte");
         btn_reporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,11 +135,11 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
 
     private void btn_graficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_graficasActionPerformed
         // TODO add your handling code here:
-        VistaGraficas vg = new VistaGraficas(con);
-        vg.setVisible(true);
-        panelGeneral.add(vg,java.awt.BorderLayout.CENTER);
-        panelGeneral.validate();
-        
+        //VistaGraficas vg = new VistaGraficas(con);
+        //vg.setVisible(true);
+        //panelGeneral.add(vg,java.awt.BorderLayout.CENTER);
+        //panelGeneral.validate();
+        graficaMensual();
     }//GEN-LAST:event_btn_graficasActionPerformed
 
     private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
@@ -250,5 +265,69 @@ public class vistaPrincipal extends javax.swing.JFrame implements ActionListener
             panelGeneral.validate();*/
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void graficaMensual(){
+        ReservacionDAO rdao = new ReservacionDAO();
+        ArrayList meses = new ArrayList();
+        ArrayList huespedes = new ArrayList();
+        rdao.datosGrafica(con, meses, huespedes);
+        for (int i = 0; i < meses.size(); i++) {  
+            //datos.addValue(Integer.parseInt(String.valueOf(huespedes.get(i))), mesInverso((int) meses.get(i)),"");
+            datos.setValue((Number) huespedes.get(i),  mesInverso((int) meses.get(i)), "");
+        }
+        
+        Grafica = ChartFactory.createBarChart3D("Hotel", "Cantidad", "Huespedes", datos,PlotOrientation.VERTICAL,
+                true, true, false);
+        
+        ChartPanel panel = new ChartPanel(Grafica);
+        JFrame Ventana = new JFrame("JFreeChart");
+        Ventana.getContentPane().add(panel);
+        Ventana.pack();
+        Ventana.setVisible(true);
+        Ventana.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }
+    
+    public String mesInverso(int val){
+        String mes = "";
+        switch(val){
+            case 1:
+                mes = "Enero";
+                break;
+            case 2:
+                mes = "Febrero";
+                break;
+            case 3:
+                mes = "Marzo";
+                break;
+            case 4:
+                mes = "Abril";
+                break;
+            case 5:
+                mes = "Mayo";
+                break;
+            case 6:
+                mes = "Junio";
+                break;
+            case 7:
+                mes = "Julio";
+                break;
+            case 8:
+                mes = "Agosto";
+                break;
+            case 9:
+                mes = "Septiembre";
+                break;
+            case 10:
+                mes = "Octubre";
+                break;
+            case 11:
+                mes = "Noviembre";
+                break;
+            case 12:
+                mes = "Diciembre";
+                break;   
+        }
+        return mes;
     }
 }

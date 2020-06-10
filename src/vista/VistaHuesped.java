@@ -43,15 +43,13 @@ public class VistaHuesped extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         txt_busqueda_huesped = new javax.swing.JTextField();
         btn_buscar_huesped = new javax.swing.JButton();
         btn_agregar_huesped = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_huesped = new javax.swing.JTable();
-
-        jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
-        jLabel1.setText("Huesped");
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         txt_busqueda_huesped.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -94,38 +92,55 @@ public class VistaHuesped extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_huesped);
 
+        jPanel1.setBackground(new java.awt.Color(49, 128, 205));
+
+        jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
+        jLabel1.setText("Huesped");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(348, 348, 348)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txt_busqueda_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_buscar_huesped)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_agregar_huesped)))
-                .addContainerGap(453, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
+                .addContainerGap()
+                .addComponent(txt_busqueda_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_buscar_huesped)
+                .addGap(18, 18, 18)
+                .addComponent(btn_agregar_huesped)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_busqueda_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_buscar_huesped)
                     .addComponent(btn_agregar_huesped))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -174,14 +189,11 @@ public class VistaHuesped extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         clave += String.valueOf(evt.getKeyChar());
-        System.out.println(clave+" parametro");
         if(evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-            System.out.println("vista.VistaHuesped.txt_busqueda_huespedKeyPressed() --> "+clave);
+            
             String v = clave.substring(clave.length()-2, clave.length());
-            System.out.println("vista.VistaHuesped.txt_busqueda_huespedKeyPressed() ---> "+clave+" v --> "+v);
             clave = clave.replace(v, " ");
             clave = clave.strip();
-            System.out.println("vista.VistaHuesped.txt_busqueda_huespedKeyPressed() ----> "+clave);
             tb.actualizar_tabla(tbl_huesped, co,"nombre_huesped", clave);
         }
         else{
@@ -195,6 +207,7 @@ public class VistaHuesped extends javax.swing.JPanel {
     private javax.swing.JButton btn_agregar_huesped;
     private javax.swing.JButton btn_buscar_huesped;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_huesped;
     private javax.swing.JTextField txt_busqueda_huesped;

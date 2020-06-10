@@ -35,8 +35,10 @@ public class TablaHuespedReservacion {
         
         ResultSet result = conexion.consultarRegistros(sql);
         JButton btn_eliminar = new JButton("Eliminar");
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eliminar.png")));
         btn_eliminar.setName("elm");
         JButton btn_actualizar = new JButton("Acutalizar");
+        btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/actualizar.png")));
         btn_actualizar.setName("act");
         
         tm.setColumnIdentifiers(new Object[] {"Id Huesped","Nombre","Primer Ap","Segundo Ap","Id Reservacion","Reservacion",
